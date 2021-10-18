@@ -1,5 +1,4 @@
 ## ABOUT ME
-![图片文字描述](https://github.com/buckyyyy/buckyyyy.github.com/blob/gh-pages/QQ%E5%9B%BE%E7%89%8720211018164823.jpg)
 
 Name：Liu Yuhan
 
