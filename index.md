@@ -1,38 +1,37 @@
 ## ABOUT ME
 
-You can use the [editor on GitHub](https://github.com/1yiyan/1yiyan.github.io/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
+Name：Liu Yuhan
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Mail：1404699199@qq.com
 
-### 邮箱
+Research Direction：Formal verification
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### EDUCATION
 
-```markdown
-Syntax highlighted code block
+Sep 2017-Jun 2021   
 
-# Header 1
-## Header 2
-### Header 3
+Swjtu：Network Engineering
 
-- Bulleted
-- List
+Sep 2021-Now        
 
-1. Numbered
-2. List
+Swjtu：Traffic Information Engineering and Control
 
-**Bold** and _Italic_ and `Code` text
+### SKILL & INTERESTS
 
-[Link](url) and ![Image](src)
-```
+->	C、B method、C#
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+->  Event-B、Rodin、Matlab、Simulink、Visual Studio
 
-### Jekyll Themes
+### AWARD
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/1yiyan/1yiyan.github.io/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+->	Excellent student cadre of school for three years
 
-### Support or Contact
+->	Comprehensive Scholarship for three years
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+->	School-level excellent graduates
+
+->	Undergraduate Mathematical Contest in Modeling-First Prize of Province
+
+->	National Competition of Transport Science and Technology for Undergraduate Students- second prize
+
 
