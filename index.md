@@ -8,17 +8,17 @@ Research Direction：Formal verification
 
 ### EDUCATION
 
-#### Sep 2017-Jun 2021：Swjtu
+##### Sep 2017-Jun 2021：Swjtu
 
 Network Engineering
 
-#### Sep 2021-Now：Swjtu
+##### Sep 2021-Now：Swjtu
 
 Traffic Information Engineering and Control
 
 ### INTERN EXPERIENCE
 
-#### Jul 2021-Aug 2021：CRSC Design Institute
+##### Jul 2021-Aug 2021：CRSC Design Institute
 
 During the internship, my main work was based on the Phoenix Maglev project and used Simulink to test and develop the ATS and BAS subsystems of the integrated monitoring system.
 
