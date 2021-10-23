@@ -8,13 +8,19 @@ Research Direction：Formal verification
 
 ### EDUCATION
 
-Sep 2017-Jun 2021   
+#### Sep 2017-Jun 2021：Swjtu
 
-Swjtu：Network Engineering
+Network Engineering
 
-Sep 2021-Now        
+#### Sep 2021-Now：Swjtu
 
-Swjtu：Traffic Information Engineering and Control
+Traffic Information Engineering and Control
+
+### INTERN EXPERIENCE
+
+#### Jul 2021-Aug 2021：CRSC Design Institute
+
+During the internship, my main work was based on the Phoenix Maglev project and used Simulink to test and develop the ATS and BAS subsystems of the integrated monitoring system.
 
 ### SKILL & INTERESTS
 
@@ -24,14 +30,14 @@ Swjtu：Traffic Information Engineering and Control
 
 ### AWARD
 
-->	Excellent student cadre of school for three years
+1.	Excellent student cadre of school for three years
 
-->	Comprehensive Scholarship for three years
+2.	Comprehensive Scholarship for three years
 
-->	School-level excellent graduates
+3.	School-level excellent graduates
 
-->	Undergraduate Mathematical Contest in Modeling-First Prize of Province
+4.  Undergraduate Mathematical Contest in Modeling-First Prize of Province
 
-->	National Competition of Transport Science and Technology for Undergraduate Students- second prize
+5.	National Competition of Transport Science and Technology for Undergraduate Students- second prize
 
 
