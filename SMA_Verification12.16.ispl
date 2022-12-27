@@ -1,0 +1,226 @@
+Agent Environment
+    Vars:
+    	Train_state:{Approach,Waiting,Going};
+    end Vars
+    Actions = {none,Keep_Going,Stop,null};
+    Protocol:
+        Train_state=Approach :{null};
+    	Train_state=Going :{Keep_Going};
+    	Train_state=Waiting :{Stop};
+		Other: {none};
+    end Protocol
+	Evolution:
+		Train_state=Going   if (Next_SMA.Action=show_Release) and (Next_Block.Action=show_free)
+		                       and (Earthquake.Action=No_Earthquake) and (Landslides.Action=Normal)
+		                       and (Intrusion.Action=Normal);
+		Train_state=Waiting if (Next_SMA.Action=show_Release) and ((Next_Block.Action=show_busy)
+		                       or (Earthquake.Action=Earthquake) or (Landslides.Action=Abnormal)
+		                       or (Intrusion.Action=Abnormal));
+		Train_state=Waiting if Next_SMA.Action=show_Occupancy;
+		Train_state=Waiting if Action=none;
+    end Evolution
+end Agent
+
+--Determining whether the SMA for the next zone is authorised
+Agent Next_SMA
+    Vars:
+      value: boolean;
+    end Vars
+    Actions = {none,show_Occupancy,show_Release};
+	Protocol:
+		value=true:{show_Occupancy};
+		value=false:{show_Release};
+		Other: {none};
+    end Protocol
+	Evolution:
+		value=true  if value=true;
+		value=false if value=false;
+    end Evolution
+end Agent
+
+--External factors control (earthquakes)
+Agent External_factors1
+  Vars:
+    earthq_state: {earthq_initial,earthq_true,earthq_false};
+  end Vars
+  Actions = {none,null,earthq,noearthq};
+	Protocol:
+	    earthq_state = earthq_initial : {null};
+		earthq_state = earthq_true    : {earthq};
+		earthq_state = earthq_false   : {noearthq};
+    	Other : {none};
+    end Protocol
+    Evolution:
+		earthq_state=earthq_true  if earthq_state=earthq_initial;
+		earthq_state=earthq_false if earthq_state=earthq_initial;
+		earthq_state=earthq_initial if earthq_state=earthq_true or earthq_state=earthq_false;
+    end Evolution
+end Agent
+
+--External factors control (landslides)
+Agent External_factors2
+  Vars:
+    lands_state : {lands_initial,lands_true,lands_false};
+  end Vars
+  Actions = {none,null,lands,nolands};
+	Protocol:
+		lands_state  = lands_initial  : {null};
+		lands_state  = lands_true     : {lands};
+		lands_state  = lands_false    : {nolands};
+    	Other : {none};
+    end Protocol
+    Evolution:
+		lands_state=lands_true    if lands_state=lands_initial;
+		lands_state=lands_false   if lands_state=lands_initial;
+		lands_state=lands_initial if lands_state=lands_true or lands_state=lands_false;
+    end Evolution
+end Agent
+
+--External factors control (foreign body intrusion)
+Agent External_factors3
+  Vars:
+    intru_state: {intru_initial,intru_true,intru_false};
+  end Vars
+  Actions = {none,null,intru,nointru};
+	Protocol:
+		intru_state  = intru_initial  : {null};
+		intru_state  = intru_true     : {intru};
+		intru_state  = intru_false    : {nointru};
+    	Other : {none};
+    end Protocol
+    Evolution:
+		intru_state=intru_true  if intru_state=intru_initial;
+		intru_state=intru_false if intru_state=intru_initial;
+		intru_state=intru_initial if intru_state=intru_true or intru_state=intru_false;		
+    end Evolution
+end Agent
+
+--Next block occupancy status
+Agent Next_Block
+    Vars:
+      value: boolean;
+    end Vars
+    Actions = {none,show_busy,show_free};
+	Protocol:
+		value=true:{show_busy};
+		value=false:{show_free};
+		Other: {none};
+    end Protocol
+	Evolution:
+		value=true  if value=true;
+		value=false if value=false;
+    end Evolution
+end Agent
+
+--Earthquake monitoring
+Agent Earthquake
+  Vars:
+    value: boolean;
+  end Vars
+  Actions = {none,Earthquake,No_Earthquake};
+	Protocol:
+		value=true:{Earthquake};
+		value=false:{No_Earthquake};
+    	Other : {none};
+    end Protocol
+    Evolution:
+		value=true  if External_factors1.Action=earthq;
+		value=false if External_factors1.Action=noearthq;
+    end Evolution
+end Agent
+
+--Landslide monitoring
+Agent Landslides
+  Vars:
+    value: boolean;
+  end Vars
+  Actions = {none,Abnormal,Normal};
+	Protocol:
+		value=true:{Abnormal};
+		value=false:{Normal};
+    	Other : {none};
+    end Protocol
+    Evolution:
+		value=true  if External_factors2.Action=lands;
+		value=false if External_factors2.Action=nolands;
+    end Evolution
+end Agent
+
+--Foreign body intrusion monitoring
+Agent Intrusion
+  Vars:
+    value: boolean;
+  end Vars
+  Actions = {none,Abnormal,Normal};
+	Protocol:
+		value=true:{Abnormal};
+		value=false:{Normal};
+    	Other : {none};
+    end Protocol
+    Evolution:
+		value=true  if External_factors3.Action=intru;
+		value=false if External_factors3.Action=nointru;
+    end Evolution
+end Agent
+
+Agent Count
+   Vars:
+    	a: 0..4;
+    end Vars
+    Actions = {none};
+    Protocol:
+    	Other : {none};
+    end Protocol
+    Evolution:
+     	a=1 if (Next_Block.Action=show_free and Earthquake.Action=Earthquake and Landslides.Action=Abnormal and Intrusion.Action=Abnormal)or
+     	       (Next_Block.Action=show_busy and Earthquake.Action=No_Earthquake and Landslides.Action=Abnormal and Intrusion.Action=Abnormal)or
+    	       (Next_Block.Action=show_busy and Earthquake.Action=Earthquake and Landslides.Action=Normal and Intrusion.Action=Abnormal)or
+    	       (Next_Block.Action=show_busy and Earthquake.Action=Earthquake and Landslides.Action=Abnormal and Intrusion.Action=Normal);
+    	a=2 if (Next_Block.Action=show_free and Earthquake.Action=No_Earthquake and Landslides.Action=Abnormal and Intrusion.Action=Abnormal)or
+    	       (Next_Block.Action=show_free and Earthquake.Action=Earthquake and Landslides.Action=Normal and Intrusion.Action=Abnormal)or
+    	       (Next_Block.Action=show_free and Earthquake.Action=Earthquake and Landslides.Action=Abnormal and Intrusion.Action=Normal)or
+    	       (Next_Block.Action=show_busy and Earthquake.Action=No_Earthquake and Landslides.Action=Normal and Intrusion.Action=Abnormal)or
+    	       (Next_Block.Action=show_busy and Earthquake.Action=No_Earthquake and Landslides.Action=Abnormal and Intrusion.Action=Normal)or
+    	       (Next_Block.Action=show_busy and Earthquake.Action=Earthquake and Landslides.Action=Normal and Intrusion.Action=Normal);
+    	a=3 if (Next_Block.Action=show_free and Earthquake.Action=No_Earthquake and Landslides.Action=Normal and Intrusion.Action=Abnormal)or
+    	       (Next_Block.Action=show_free and Earthquake.Action=No_Earthquake and Landslides.Action=Abnormal and Intrusion.Action=Normal)or
+    	       (Next_Block.Action=show_free and Earthquake.Action=Earthquake and Landslides.Action=Normal and Intrusion.Action=Normal)or
+    	       (Next_Block.Action=show_busy and Earthquake.Action=No_Earthquake and Landslides.Action=Normal and Intrusion.Action=Normal);
+    	a=4 if (Next_Block.Action=show_free and Earthquake.Action=No_Earthquake and Landslides.Action=Normal and Intrusion.Action=Normal);
+--    	a<4 if !(Next_Block.Action=show_free and Earthquake.Action=No_Earthquake and Landslides.Action=Normal and Intrusion.Action=Normal);
+    end Evolution
+end Agent
+
+Evaluation
+  Gen_SMA           if Environment.Train_state=Going;
+  Non_SMA           if Environment.Train_state=Waiting or Environment.Train_state=Approach;
+  Full_factors      if Count.a=4;
+  Partial_factors   if Count.a<4;
+  Next_SMA_true     if Next_SMA.value=true;
+  Next_SMA_false    if Next_SMA.value=false;
+  Next_Block_true   if Next_Block.value=true;
+  Next_Block_false  if Next_Block.value=false;
+  Earthquake_true   if Earthquake.value=true;
+  Earthquake_false  if Earthquake.value=false;
+  Landslides_true   if Landslides.value=true;
+  Landslides_false  if Landslides.value=false;
+  Intrusion_true    if Intrusion.value=true;
+  Intrusion_false   if Intrusion.value=false;
+end Evaluation
+
+InitStates --InitStates
+
+  Environment.Train_state=Approach and Count.a=0 and External_factors1.earthq_state=earthq_initial and
+  External_factors2.lands_state=lands_initial and External_factors3.intru_state=intru_initial;
+  
+end InitStates
+
+Formulae
+     AG((Gen_SMA) -> (Full_factors));
+     AG((Non_SMA and Next_SMA_false) -> (Partial_factors));
+     E((Gen_SMA) U (Non_SMA));
+     E((Earthquake_true) U (Earthquake_false));
+     E((Landslides_true) U (Landslides_false));
+     E((Intrusion_true)  U (Intrusion_false));
+--   E((Next_Block_true) U (Next_Block_false));
+end Formulae
